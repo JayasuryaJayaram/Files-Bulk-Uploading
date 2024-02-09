@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "bulk-uploading-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/bulkUploading/BulkUploadingWebPart.js",
+          "manifest": "./src/webparts/bulkUploading/BulkUploadingWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "BulkUploadingWebPartStrings": "lib/webparts/bulkUploading/loc/{locale}.js"
+  }
+}

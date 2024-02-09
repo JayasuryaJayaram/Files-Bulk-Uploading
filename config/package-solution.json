@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "bulk-uploading-client-side-solution",
+    "id": "c7ebfd57-85ab-4c31-aa99-2b98de052ee3",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.18.1"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "Bulk Uploading description"
+      },
+      "longDescription": {
+        "default": "Bulk Uploading description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "bulk-uploading Feature",
+        "description": "The feature that activates elements of the bulk-uploading solution.",
+        "id": "cd3fdb53-a3c8-4ca7-891f-fab77239a018",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/bulk-uploading.sppkg"
+  }
+}
