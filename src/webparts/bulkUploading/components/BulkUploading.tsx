@@ -4,6 +4,7 @@ import type { UploadProps } from "antd";
 import { message, Upload } from "antd";
 import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
 import { IBulkUploadingProps } from "./IBulkUploadingProps";
+import styles from "./BulkUploading.module.scss";
 
 const { Dragger } = Upload;
 
@@ -11,20 +12,9 @@ const defaultUploadProps: UploadProps = {
   name: "file",
   multiple: true,
   action: "",
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
 };
 
-const FileUploading = (props: IBulkUploadingProps) => {
+const BulkUploading = (props: IBulkUploadingProps) => {
   const getFileBuffer = async (file: File): Promise<ArrayBuffer | null> => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -57,17 +47,11 @@ const FileUploading = (props: IBulkUploadingProps) => {
         body: fileData,
       };
 
-      const response = await props.context.spHttpClient.post(
+      await props.context.spHttpClient.post(
         endpoint,
         SPHttpClient.configurations.v1,
         options
       );
-
-      if (response.status === 200) {
-        message.success("File uploaded successfully");
-      } else {
-        message.error(`Error uploading file: ${response.statusText}`);
-      }
     } catch (error) {
       message.error(`Error uploading file: ${error}`);
     }
@@ -82,20 +66,47 @@ const FileUploading = (props: IBulkUploadingProps) => {
     }
   };
 
+  const customStyles = `
+  
+  :where(.css-dev-only-do-not-override-1rqnfsa).ant-upload-wrapper .ant-upload-drag {
+    width: 95%;
+    margin: auto;
+  }
+  
+  `;
+
   return (
-    <Dragger {...defaultUploadProps} {...props} onChange={handleUpload}>
-      <p className="ant-upload-drag-icon">
-        <InboxOutlined rev={undefined} />
-      </p>
-      <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibited from uploading
-        company data or other banned files.
-      </p>
-    </Dragger>
+    <div className={styles.card}>
+      <style>{customStyles}</style>
+      <div className={styles.headerBox}>File Upload</div>
+      <div className={styles.contentBox}>
+        <img
+          src={require("../assets/server.png")}
+          alt="Upload File"
+          className={styles.uploadImg}
+        />
+        <p className={styles.text}>
+          upload your{" "}
+          <span style={{ fontWeight: "600", textDecoration: "underline" }}>
+            files
+          </span>{" "}
+          to SharePoint
+        </p>
+      </div>
+      <Dragger {...defaultUploadProps} {...props} onChange={handleUpload}>
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined rev={undefined} />
+        </p>
+        <p className="ant-upload-text">
+          Click or drag file to this area to upload
+        </p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibited from
+          uploading company data or other banned files.
+        </p>
+      </Dragger>
+    </div>
   );
 };
 
-export default FileUploading;
+export default BulkUploading;
